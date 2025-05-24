@@ -1,26 +1,35 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Button from "./components/Button";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      router.push("/home");
-    } else {
-      setError(data.message || "Login failed");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        router.push("/home");
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch {
+      setError("Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,12 +63,13 @@ export default function LoginPage() {
             required
           />
         </div>
-        <button
+        <Button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition"
-        >
-          Login
-        </button>
+          text="Login"
+          loading={loading}
+          color="blue"
+          disabled={loading}
+        />
       </form>
     </div>
   );
