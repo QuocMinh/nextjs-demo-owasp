@@ -1,24 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Brute Force Attack Demo with Next.js
+
+This project demonstrates a simple login page vulnerable to brute force attacks, built with Next.js, TypeScript, and TailwindCSS.
+
+## Features
+
+- Login form with username and password fields, styled using TailwindCSS
+- Login handled via Next.js API route (`src/app/api/login/route.ts`)
+- Hardcoded credentials: Username: `admin`, Password: `Admin12345`
+- On successful login, a cookie `isLoggedIn` is set and user is redirected to the Home page (`/home`)
+- Middleware (`src/middleware.ts`) protects the `/home` route, redirecting unauthorized users to a custom 403 page
+- Custom 403 Forbidden page (`src/app/403/page.tsx`) for unauthorized access
+- On failed login, an error message is displayed above the form
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the demo.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## File Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/page.tsx`: Login page
+- `src/app/api/login/route.ts`: API route for login logic
+- `src/app/home/page.tsx`: Home page after successful login
+- `src/app/403/page.tsx`: 403 Forbidden page
+- `src/middleware.ts`: Middleware to protect `/home` route
+
+## Note
+
+This demo is intentionally simple and does not implement security best practices. Do not use this code in production.
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Learn More
 
